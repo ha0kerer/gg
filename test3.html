@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Submit to Webhook</title>
+</head>
+<body>
+  <h2>JS Form Submit to Webhook.site</h2>
+  <form id="customForm">
+    <label>Full Name:</label>
+    <input type="text" name="fullname"><br><br>
+
+    <label>Email:</label>
+    <input type="email" name="email"><br><br>
+
+    <label>Message:</label>
+    <textarea name="message" rows="4"></textarea><br><br>
+
+    <button type="submit">Send</button>
+  </form>
+
+  <script>
+    document.getElementById('customForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+      const data = {};
+      formData.forEach((value, key) => (data[key] = value));
+
+      fetch('https://webhook.site/2a107330-883b-4dbb-9333-71e0253d19c9', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      }).then(response => {
+        alert("Submitted successfully!");
+      }).catch(error => {
+        alert("Error submitting form.");
+        console.error(error);
+      });
+    });
+  </script>
+</body>
+</html>
